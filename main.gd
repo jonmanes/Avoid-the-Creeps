@@ -23,6 +23,7 @@ func game_over() -> void:
 
 func new_game():
 	score = 0
+	$Player/PointLight2D.energy = 1
 	$Player.start($StartPosition.position)
 	$StartTimer.start()
 	$HUD.update_score(score)
@@ -34,7 +35,9 @@ func new_game():
 func _on_score_timer_timeout() -> void:
 	score += 1
 	$HUD.update_score(score)
-
+	if (int(score)%5) == 0 && $Player/PointLight2D.energy < 1:
+		$Player/PointLight2D.energy += 0.25
+	
 
 func _on_start_timer_timeout() -> void:
 	$MobTimer.start()

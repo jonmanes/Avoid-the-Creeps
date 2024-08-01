@@ -38,10 +38,13 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	hide() # Player disappears after being hit.
-	hit.emit()
-	# Must be deffered as we can't change physics properties on a physics callback.
-	$CollisionShape2D.set_deferred("disabled", true)
+	if $PointLight2D.energy > 0:
+		$PointLight2D.energy -= 0.25
+	elif $PointLight2D.energy <= 0:
+		hide() # Player disappears after being hit.
+		hit.emit()
+		# Must be deffered as we can't change physics properties on a physics callback.
+		$CollisionShape2D.set_deferred("disabled", true)
 
 
 func start(pos):
